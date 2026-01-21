@@ -299,6 +299,7 @@ impl PrinterCommander {
     }
 
     pub fn read_status(&mut self) -> Result<PrinterStatus, std::io::Error> {
+        self.send_command(PrinterCommand::StatusInfoRequest)?;
         let res = self.printer.read(32)?;
         assert!(res[0] == 0x80);
         assert!(res[1] == 0x20);
